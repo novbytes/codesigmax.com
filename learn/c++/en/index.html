@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive C++ tutorial for beginners and advanced programmers">
+    <title>Learn C++ | codesigmax.com</title>
+    <!-- Highlight.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        details {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .chapter {
+            margin-left: 20px;
+        }
+        .code-example {
+            background: #282c34;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .code-example pre {
+            margin: 0;
+        }
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e2227;
+            color: #abb2bf;
+            padding: 8px 15px;
+            border-radius: 5px 5px 0 0;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            background: #61afef;
+            color: #282c34;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        .copy-btn:hover {
+            background: #528bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Let's Learn C++ Programming</h1>
+    
+    <details open>
+        <summary>Introduction to C++</summary>
+        <div class="chapter">
+            <p>C++ is a powerful general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language.</p>
+            
+            <h3>Your First C++ Program</h3>
+            <p>Here's a simple "Hello World" program in C++:</p>
+            
+            <div class="code-example">
+                <div class="code-header">
+                    <span>hello_world.cpp</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code class="language-cpp">#include &lt;iostream&gt;
+
+int main() {
+    // This is a simple C++ program
+    std::cout &lt;&lt; "Hello, World!" &lt;&lt; std::endl;
+    
+    // Variables and basic operations
+    int number = 42;
+    double pi = 3.14159;
+    std::string message = "Learning C++ is fun!";
+    
+    std::cout &lt;&lt; "The number is: " &lt;&lt; number &lt;&lt; std::endl;
+    std::cout &lt;&lt; "PI is approximately: " &lt;&lt; pi &lt;&lt; std::endl;
+    std::cout &lt;&lt; message &lt;&lt; std::endl;
+    
+    return 0;
+}</code></pre>
+            </div>
+            
+            <p>Key components of this program:</p>
+            <ul>
+                <li><code>#include &lt;iostream&gt;</code> - Header for input/output operations</li>
+                <li><code>int main()</code> - The main function where execution begins</li>
+                <li><code>std::cout</code> - Standard output stream</li>
+                <li><code>std::endl</code> - End line manipulator</li>
+                <li><code>return 0</code> - Indicates successful program execution</li>
+            </ul>
+        </div>
+    </details>
+    
+    <details>
+        <summary>C++ Basics</summary>
+        <div class="chapter">
+            <h3>Variables and Data Types</h3>
+            <div class="code-example">
+                <div class="code-header">
+                    <span>variables.cpp</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    // Integer types
+    int age = 25;
+    short smallNumber = 32767;
+    long bigNumber = 2147483647;
+    
+    // Floating point types
+    float price = 19.99f;
+    double pi = 3.1415926535;
+    
+    // Character types
+    char grade = 'A';
+    bool isCppFun = true;
+    
+    // String type
+    std::string name = "Alice";
+    
+    // Output all variables
+    std::cout &lt;&lt; "Age: " &lt;&lt; age &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Small number: " &lt;&lt; smallNumber &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Price: " &lt;&lt; price &lt;&lt; std::endl;
+    std::cout &lt;&lt; "PI: " &lt;&lt; pi &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Grade: " &lt;&lt; grade &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Is C++ fun? " &lt;&lt; std::boolalpha &lt;&lt; isCppFun &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; std::endl;
+    
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    </details>
+    
+    <details>
+        <summary>Object-Oriented Programming in C++</summary>
+        <div class="chapter">
+            <h3>Classes and Objects</h3>
+            <div class="code-example">
+                <div class="code-header">
+                    <span>class_example.cpp</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+// Define a class
+class Car {
+private:
+    std::string brand;
+    std::string model;
+    int year;
+    
+public:
+    // Constructor
+    Car(std::string b, std::string m, int y) : brand(b), model(m), year(y) {}
+    
+    // Method to display car information
+    void displayInfo() {
+        std::cout &lt;&lt; "Brand: " &lt;&lt; brand &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Model: " &lt;&lt; model &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Year: " &lt;&lt; year &lt;&lt; std::endl;
+    }
+    
+    // Setter method
+    void setYear(int newYear) {
+        year = newYear;
+    }
+};
+
+int main() {
+    // Create an object of Car
+    Car myCar("Toyota", "Corolla", 2020);
+    
+    // Call methods
+    myCar.displayInfo();
+    
+    // Modify property using 
+    myCar.setYear(2022);
+    std::cout &lt;&lt; "\nAfter update:" &lt;&lt; std::endl;
+    myCar.displayInfo();
+    
+    return 0;
+}</code></pre>
+            </div>
+        </div>
+    </details>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        
+        function copyCode(button) {
+            const codeBlock = button.parentElement.nextElementSibling;
+            const code = codeBlock.querySelector('code').innerText;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
+    
+    <footer style="margin-top: 30px; text-align: center; color: #7f8c8d;">
+        <p>&copy; 2025 codesigmax.com - All rights reserved</p>
+    </footer>
+</body>
+</html>
