@@ -1,54 +1,48 @@
 body {
-    background-image: url("https://static.wikia.nocookie.net/8dc2e382-9681-4199-bf80-551e559add1e/scale-to-width/755");
-    background-size: 75px 75px;
-    background-attachment: fixed;
+    background-image: url("https://media.tenor.com/J_QZE-cu2-QAAAAi/maxwell.gif");
+    background-size: 80px;
 }
 
-.sigma_1 {
-    text-align: center;
-    text-shadow: none;
-    font-style: italic;
+.sigma_img {
+    display: flex;
+    justify-content: center;
 }
 
-.sigma_1 p {
-    color: #0399cb;
+.sigma_img img {
+    width: 330px;
+    height: 330px;          
+    border-radius: 50%;    
+    outline: 3px solid rgba(255, 255, 0, 0);
+    animation: glow 2s infinite;
+    object-fit: cover;    
 }
 
-.sigmax_project {
-    background-image: url('https://i.pinimg.com/736x/30/d8/30/30d830bf5cfed320e6d0bd2c616d8c5c.jpg');
+@keyframes glow {
+  0% {
+    outline-color: rgba(255, 255, 0, 0);   /* no glow */
+    box-shadow: 0 0 5px rgba(255, 255, 0, 0);
+  }
+  50% {
+    outline-color: rgba(255, 255, 0, 1);   /* full glow */
+    box-shadow: 0 0 15px 5px rgba(255, 255, 0, 0.8);
+  }
+  100% {
+    outline-color: rgba(255, 255, 0, 0);
+    box-shadow: 0 0 5px rgba(255, 255, 0, 0);
+  }
+}
+
+.sigma_content_1 {
+    background-image: url("https://i.pinimg.com/736x/80/8f/0d/808f0d62f1e6774fe929abe136524839.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 775px 175px;
-    color: white; 
-    padding: 40px 20px;
-}
+    color: #ffffff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.spinning {
-    display: inline-block;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes fly {
-    0% { transform: translateX(-100vw); }
-    50% { transform: translateX(0) rotate(180deg); }
-    100% { transform: translateX(100vw); }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.fly-spin {
-    animation: fly 1s linear infinite, spin 2s linear infinite;
-    display: inline-block;
-    width: 150px;
-    height: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    text-shadow: 4px 4px 4px rgba(0,0,0,0.5);
 }

@@ -3,29 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="https://i.pinimg.com/736x/bf/c7/2f/bfc72f7aac6c0290de0ddb30363de0f3.jpg">
-    <meta name="description" content="The SigmaX Program">
-    <title>CodeSigmaX - 2025</title>
+    <meta name="description" content="CodeSigmaX - Masukan Teks...">
+    <meta property="og:image" content="cats.png">
+    <link rel="shortcut icon" href="cats.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/sigma_1.css">
+    <title>CodeSigmaX</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-color: #1f2937;
+            --light-color: #f9fafb;
+            --dark-color: #111827;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .sigma_img {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .sigma_img img {
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .sigma_img img:hover {
+            transform: scale(1.05);
+        }
+        
+        .sigma_content_1 {
+            text-align: center;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .sigmax_project {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sigmax_project h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        li a {
+            display: block;
+            padding: 0.8rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        li a:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        @media (min-width: 768px) {
+            main {
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+            }
+            
+            .sigma_content_1 {
+                text-align: left;
+            }
+            
+            .sigmax_project {
+                grid-column: span 2;
+            }
+        }
+    </style>
 </head>
 <body>
     <main>
-        <center><img src="https://i.pinimg.com/736x/60/92/d3/6092d3f8ea619cf474768bc4a1882080.jpg" alt="the sigmax" class="fly-spin"></center>
-        <div class="sigma_1">
-            <h1 class="spinning">CodeSigmaX</h1>
-            <p>The Coldest Program🥶</p>
+        <div class="sigma_img">
+            <img src="cats.png" alt="CodeSigmaX Logo" width="250">
+        </div>
+        <div class="sigma_content_1">
+            <h1>CodeSigmaX</h1>
+            <p>We build innovative software solutions that make a difference.</p>
+            <p>Our team is passionate about creating elegant, efficient code that solves real-world problems.</p>
+            <p><b>CodeSigmaX</b> is looking for talented developers to join our growing team.</p>
+            <p>Specializing in system development, game design, and reverse engineering.</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/novbytes" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://whatsapp.com/channel/0029Vb5aDSL0lwgnEmIrnL3B" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:contact@codesigmax.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="sigmax_project">
+            <h1>Sigma Project</h1>
+            <ul>
+                <li><a href="#"><i class="fas fa-desktop"></i> SigmaOS</a></li>
+                <li><a href="#"><i class="fas fa-gamepad"></i> Game Development</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Random Fun Projects</a></li>
+                <li><a href="#"><i class="fas fa-microscope"></i> Reverse Engineering</a></li>
+                <li><a href="https://github.com/novbytes" target="_blank"><i class="fab fa-github"></i> GitHub Profile</a></li>
+                <li><a href="#contact"><i class="fas fa-users"></i> Join Our Team</a></li>
+            </ul>
         </div>
     </main>
-
-    <section class="sigmax_project">
-        <h1>SigmaX Project</h1>
-        <ul>
-            <li><a href="about/sigmaos">sigmaOS</a></li>
-            <li><a href="about/reverse-engineering">reverse-engineering</a></li>
-            <li><a href="about/game-dev">game dev</a></li>
-        </ul>
-    </section>
-    <script src="assets/js/sigma.js"></script>
 </body>
 </html>

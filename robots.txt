@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /learn
+Disallow: /assets/
+
+Sitemap: https://codesigmax.com/sitemap.xml
