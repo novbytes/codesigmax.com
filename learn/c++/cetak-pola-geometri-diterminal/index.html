@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mencetak Pola Geometri Menggunakan Bahasa C++</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-gray-300 font-sans antialiased leading-relaxed">
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl shadow-black/50 p-6 md:p-8 border border-gray-700/50">
+            <h1 class="text-4xl font-bold mb-6 text-gradient from-cyan-400 to-purple-500">
+                Mencetak Pola Geometri dalam Bahasa C++
+            </h1>
+            
+            <div class="flex justify-center mb-8">
+                <img src="../../../assets/media/image.png" alt="Contoh Pola Geometri" class="rounded-lg border border-gray-700 shadow-lg w-full max-w-md">
+            </div>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold mb-4 text-cyan-400 border-b border-gray-700 pb-2">1. Apa Itu Pola Geometri?</h2>
+                <p class="mb-4 text-gray-300">
+                    Pola geometri adalah susunan bentuk-bentuk geometris, seperti segitiga, persegi, atau lingkaran,
+                    yang memiliki keteraturan atau pengulangan tertentu. Pola ini dapat ditemukan pada bidang dua
+                    dimensi maupun bangun tiga dimensi, dan sering digunakan dalam bidang matematika, seni, arsitektur,
+                    serta desain grafis.
+                </p>
+                <p class="text-gray-300">
+                    Pada panduan ini, kita akan mempelajari cara membuat pola geometri menggunakan karakter ASCII di
+                    dalam bahasa pemrograman C++.
+                </p>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold mb-6 text-cyan-400 border-b border-gray-700 pb-2">2. Langkah-langkah Implementasi</h2>
+                <ol class="space-y-8">
+                    <li>
+                        <h3 class="text-xl font-medium mb-3 text-purple-400">Menambahkan Header</h3>
+                        <p class="mb-3 text-gray-300">
+                            Tambahkan direktif berikut untuk mengakses fungsi input dan output:
+                        </p>
+                        <pre class="rounded-lg overflow-hidden"><code class="language-cpp">#include &lt;iostream&gt;</code></pre>
+                    </li>
+
+                    <li>
+                        <h3 class="text-xl font-medium mb-3 text-purple-400">Membuat Fungsi Utama</h3>
+                        <p class="mb-3 text-gray-300">
+                            Fungsi utama <code class="bg-gray-700/50 px-1.5 py-0.5 rounded text-cyan-300">main()</code> adalah titik masuk program.
+                        </p>
+                        <pre class="rounded-lg overflow-hidden"><code class="language-cpp">int main() {
+    // kode program di sini
+    return 0;
+}</code></pre>
+                    </li>
+
+                    <li>
+                        <h3 class="text-xl font-medium mb-3 text-purple-400">Menginisialisasi Matriks Pola</h3>
+                        <p class="mb-3 text-gray-300">
+                            Buatlah variabel array dua dimensi untuk menggambarkan pola:
+                        </p>
+                        <pre class="rounded-lg overflow-hidden"><code class="language-cpp">int balok[8][8] = {
+    {0,1,1,1,1,1,1,0},
+    {1,0,1,1,1,1,0,1},
+    {1,1,0,1,1,0,1,1},
+    {1,1,1,0,0,1,1,1},
+    {1,1,1,0,0,1,1,1},
+    {1,1,0,1,1,0,1,1},
+    {1,0,1,1,1,1,0,1},
+    {0,1,1,1,1,1,1,0},
+};</code></pre>
+                    </li>
+
+                    <li>
+                        <h3 class="text-xl font-medium mb-3 text-purple-400">Mencetak Pola</h3>
+                        <p class="mb-3 text-gray-300">
+                            Gunakan perulangan untuk mencetak pola ke layar:
+                        </p>
+                        <pre class="rounded-lg overflow-hidden"><code class="language-cpp">for (int i = 0; i < 8; ++i) {
+    for (int j = 0; j < 8; ++j) {
+        if (balok[i][j] == 1) {
+            std::cout << "+ ";
+        } else {
+            std::cout << "  ";
+        }
+    }
+    std::cout << "\n";
+}</code></pre>
+                    </li>
+                </ol>
+            </section>
+
+            <div class="mt-10 pt-6 border-t border-gray-700/50 text-sm text-gray-500">
+                <p>2025 codesigmax.com</p>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
