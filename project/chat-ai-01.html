@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SigmaX-Ai</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <style>
+        :root {
+            --primary-bg: #121218;
+            --secondary-bg: #1e1e2a;
+            --text-color: #e0e0e0;
+            --ai-bubble: #2a2a3a;
+            --user-bubble: #3a3a4a;
+            --pink-accent: #ff6b9e;
+            --light-blue: #6bb9ff;
+            --mint-green: #7fffd4;
+            --input-bg: #252535;
+            --code-bg: #1a1a2a;
+            --code-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: var(--secondary-bg);
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--pink-accent);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--pink-accent), var(--light-blue), var(--mint-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-message {
+            align-self: flex-start;
+            background-color: var(--ai-bubble);
+            border-bottom-left-radius: 0.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--user-bubble);
+            border-bottom-right-radius: 0.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+            text-align: right;
+        }
+
+        .ai-name {
+            color: var(--mint-green);
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .user-name {
+            color: var(--light-blue);
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            text-align: right;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 1rem;
+            background-color: var(--secondary-bg);
+            border-top: 2px solid var(--light-blue);
+            gap: 0.5rem;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border-radius: 2rem;
+            border: none;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .message-input:focus {
+            box-shadow: 0 0 0 2px var(--pink-accent);
+        }
+
+        .send-button, .upload-button {
+            background-color: var(--pink-accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-button {
+            background-color: var(--light-blue);
+        }
+
+        .send-button:hover, .upload-button:hover {
+            transform: scale(1.05);
+        }
+
+        .send-button:active, .upload-button:active {
+            transform: scale(0.95);
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .typing-indicator {
+            display: inline-flex;
+            gap: 0.3rem;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: var(--ai-bubble);
+            border-radius: 1rem;
+            align-self: flex-start;
+        }
+
+        .typing-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--mint-green);
+            border-radius: 50%;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-0.3rem); }
+        }
+
+        /* Markdown styles */
+        .markdown-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .markdown-content h1, 
+        .markdown-content h2, 
+        .markdown-content h3, 
+        .markdown-content h4, 
+        .markdown-content h5, 
+        .markdown-content h6 {
+            margin: 0.5rem 0;
+            color: var(--mint-green);
+        }
+
+        .markdown-content p {
+            margin: 0.5rem 0;
+        }
+
+        .markdown-content ul, 
+        .markdown-content ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .markdown-content li {
+            margin: 0.2rem 0;
+        }
+
+        .markdown-content strong {
+            color: var(--pink-accent);
+        }
+
+        .markdown-content em {
+            color: var(--light-blue);
+            font-style: italic;
+        }
+
+        .markdown-content a {
+            color: var(--light-blue);
+            text-decoration: underline;
+        }
+
+        .markdown-content blockquote {
+            border-left: 3px solid var(--pink-accent);
+            padding-left: 1rem;
+            margin: 0.5rem 0;
+            color: #aaa;
+        }
+
+        /* Code block styles */
+        .code-block-container {
+            position: relative;
+            margin: 0.8rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .code-block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--code-bg);
+            padding: 0.3rem 0.5rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            border: 1px solid var(--code-border);
+            border-bottom: none;
+        }
+
+        .code-block-language {
+            font-size: 0.8rem;
+            color: var(--mint-green);
+            font-family: monospace;
+        }
+
+        .code-block-copy {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 0.3rem;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+        }
+
+        .code-block-copy:hover {
+            background-color: var(--pink-accent);
+        }
+
+        .code-block-copy.copied {
+            background-color: var(--mint-green);
+            color: #000;
+        }
+
+        .code-block {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border: 1px solid var(--code-border);
+            border-bottom-left-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .inline-code {
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.3rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--code-border);
+        }
+
+        @media (max-width: 768px) {
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI LU Sendiri</h1>
+    </div>
+
+    <div class="chat-container" id="chat-container">
+    </div>
+
+    <div class="input-area">
+        <button class="upload-button" id="upload-button" title="Upload Image">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.17 1.821l-.865-.433A1 1 0 0 0 12 13.998V5a1 1 0 0 0-1-1h-10a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h10a1 1 0 0 0 .832-.375l.415-.625z"/>
+                <path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg>
+        </button>
+        <input type="file" id="file-input" accept="image/*">
+        <input type="text" class="message-input" id="message-input" placeholder="Type your message..." autocomplete="off">
+        <button class="send-button" id="send-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+            </svg>
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/bash.min.js"></script>
+
+    <script>
+        const Aiprompt = "Kamu adalah Sigmax, asisten AI yang sangat cerdas dan responsif. Tugasmu adalah memberikan jawaban yang informatif, relevan, dan mudah dipahami. Kamu harus selalu menjaga nada percakapan yang profesional dan sopan. Jika pengguna mengirimkan gambar, kamu harus mencoba menjelaskan isi gambar tersebut dengan cara yang jelas dan ringkas.";
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chat-container');
+            const messageInput = document.getElementById('message-input');
+            const sendButton = document.getElementById('send-button');
+            const uploadButton = document.getElementById('upload-button');
+            const fileInput = document.getElementById('file-input');
+            
+            marked.setOptions({
+                breaks: true,
+                highlight: function(code, lang) {
+                    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                    return hljs.highlight(code, { language }).value;
+                }
+            });
+            
+            addMessage('ai', '@codesigmax.com.');
+            
+            sendButton.addEventListener('click', sendMessage);
+            
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            uploadButton.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    uploadImage(e.target.files[0]);
+                }
+            });
+            
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message) {
+                    addMessage('user', message);
+                    messageInput.value = '';
+                    
+                    const typingIndicator = document.createElement('div');
+                    typingIndicator.className = 'typing-indicator';
+                    typingIndicator.innerHTML = `
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    `;
+                    chatContainer.appendChild(typingIndicator);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    callAI(message);
+                }
+            }
+            
+            function addMessage(sender, content) {
+                const messageDiv = document.createElement('div');
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                let processedContent = content;
+                if (sender === 'ai') {
+                    processedContent = marked.parse(content);
+                } else {
+                    processedContent = escapeHtml(content);
+                }
+                
+                if (sender === 'ai') {
+                    messageDiv.className = 'message ai-message';
+                    messageDiv.innerHTML = `
+                        <div class="ai-name">SigmaX-Ai</div>
+                        <div class="markdown-content">${processedContent}</div>
+                        <div class="message-time">${time}</div>
+                    `;
+                } else {
+                    messageDiv.className = 'message user-message';
+                    messageDiv.innerHTML = `
+                        <div class="user-name">You</div>
+                        <div>${processedContent}</div>
+                        <div class="message-time">${time}</div>
+                    `;
+                }
+                
+                const typingIndicators = document.querySelectorAll('.typing-indicator');
+                typingIndicators.forEach(indicator => indicator.remove());
+                
+                chatContainer.appendChild(messageDiv);
+                
+                if (sender === 'ai') {
+                    processCodeBlocks(messageDiv);
+                }
+                
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            function escapeHtml(unsafe) {
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+            
+            function processCodeBlocks(messageDiv) {
+                const codeBlocks = messageDiv.querySelectorAll('pre code');
+                codeBlocks.forEach((codeBlock) => {
+                    const pre = codeBlock.parentElement;
+                    const container = document.createElement('div');
+                    container.className = 'code-block-container';
+                    
+                    let language = 'plaintext';
+                    if (codeBlock.className) {
+                        const langMatch = codeBlock.className.match(/language-(\w+)/);
+                        if (langMatch) {
+                            language = langMatch[1];
+                        }
+                    }
+                    
+                    const header = document.createElement('div');
+                    header.className = 'code-block-header';
+                    header.innerHTML = `
+                        <span class="code-block-language">${language}</span>
+                        <button class="code-block-copy">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                    `;
+                    
+                    pre.parentNode.insertBefore(container, pre);
+                    container.appendChild(header);
+                    container.appendChild(pre);
+                    
+                    const copyButton = container.querySelector('.code-block-copy');
+                    copyButton.addEventListener('click', function() {
+                        navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                            copyButton.innerHTML = `
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Copied!
+                            `;
+                            copyButton.classList.add('copied');
+                            setTimeout(() => {
+                                copyButton.innerHTML = `
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Copy
+                                `;
+                                copyButton.classList.remove('copied');
+                            }, 2000);
+                        });
+                    });
+                    
+                    pre.className = 'code-block';
+                    hljs.highlightElement(codeBlock);
+                });
+                
+                const inlineCodeElements = messageDiv.querySelectorAll('code:not(pre code)');
+                inlineCodeElements.forEach((codeElement) => {
+                    const span = document.createElement('span');
+                    span.className = 'inline-code';
+                    span.textContent = codeElement.textContent;
+                    codeElement.parentNode.replaceChild(span, codeElement);
+                });
+            }
+            
+            function callAI(message, imageUrl = null) {
+                let apiUrl = `https://fastrestapis.fasturl.link/aillm/gpt-4o?ask=${encodeURIComponent(message)}&style=${Aiprompt}&sessionId=abcxyz123`;
+                
+                if (imageUrl) {
+                    apiUrl += `&imageUrl=${encodeURIComponent(imageUrl)}`;
+                }
+                
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 200) {
+                            addMessage('ai', data.result);
+                        } else {
+                            addMessage('ai', "Sorry, I couldn't process your request. Please try again.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        addMessage('ai', "Sorry, I'm having trouble connecting. Please check your internet connection and try again.");
+                    });
+            }
+            
+            function uploadImage(file) {
+                addMessage('user', '[Uploading image...]');
+                
+                const formData = new FormData();
+                formData.append('fileToUpload', file);
+                formData.append('reqtype', 'fileupload');
+                formData.append('userhash', '');
+                
+                fetch('https://catbox.moe/user/api.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(imageUrl => {
+                    const messages = document.querySelectorAll('.message');
+                    messages[messages.length - 1].remove();
+                    
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message user-message';
+                    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    messageDiv.innerHTML = `
+                        <div class="user-name">You</div>
+                        <div><img src="${imageUrl}" style="max-width: 100%; border-radius: 0.5rem;" alt="Uploaded image"></div>
+                        <div class="message-time">${time}</div>
+                    `;
+                    chatContainer.appendChild(messageDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    const typingIndicator = document.createElement('div');
+                    typingIndicator.className = 'typing-indicator';
+                    typingIndicator.innerHTML = `
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    `;
+                    chatContainer.appendChild(typingIndicator);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    callAI("What is this image?", imageUrl);
+                })
+                .catch(error => {
+                    console.error('Upload error:', error);
+                    addMessage('ai', "Sorry, I couldn't upload the image. Please try again.");
+                });
+            }
+        });
+    </script>
+</body>
+</html>
