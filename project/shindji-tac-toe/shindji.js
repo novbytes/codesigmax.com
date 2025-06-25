@@ -14,11 +14,13 @@ const botMessageText = document.getElementById('bot-message-text');
 const catExpression = document.getElementById('cat-expression');
 const difficultyLevel = document.getElementById('difficulty-level');
 
+//sfx
 const clickSound = document.getElementById('clickSound');
 const winSound = document.getElementById('winSound');
 const loseSound = document.getElementById('loseSound');
 const drawSound = document.getElementById('drawSound');
 const bgMusic = document.getElementById('bgMusic');
+const typeSound = document.getElementById('typeSound');
 
 function enableAudio() {
     if (musicEnabled) {
@@ -111,7 +113,7 @@ function initGame() {
     playSound(clickSound);
 }
 
-function handleCellClick(e) {
+async function handleCellClick(e) {
     const clickedCell = e.target;
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
 
@@ -120,7 +122,6 @@ function handleCellClick(e) {
     }
 
     playSound(clickSound);
-
     makeMove(clickedCellIndex, 'X');
 
     if (checkWin() || checkDraw()) {
@@ -130,13 +131,14 @@ function handleCellClick(e) {
     currentPlayer = 'O';
     statusDisplay.textContent = "SHINDJI BERPIKIR . . .";
 
-    setRandomMessage('thinking');
+    await setRandomMessage('thinking');
 
+    const messageDelay = Math.max(950, Math.min(1500, botMessageText.textContent.length * 100));
+    
     setTimeout(() => {
         if (gameActive) {
             const aiMove = findBestMove();
             makeMove(aiMove, 'O');
-
             playSound(clickSound);
 
             checkWin();
@@ -148,7 +150,7 @@ function handleCellClick(e) {
                 setRandomMessage('idle');
             }
         }
-    }, 500 + Math.random() * 1000);
+    }, messageDelay);
 }
 
 function makeMove(index, player) {
@@ -316,18 +318,42 @@ function canCreateFork(move, player) {
 }
 
 function setRandomMessage(category) {
-    const messageList = messages[category];
-    const randomMessage = messageList[Math.floor(Math.random() * messageList.length)];
+    return new Promise(resolve => {
+        const messageList = messages[category];
+        const randomMessage = messageList[Math.floor(Math.random() * messageList.length)];
+        
+        catExpression.src = randomMessage.image;
+        botMessageText.textContent = "";
+        
+        typeMessage(randomMessage.text, 0, 50).then(() => {
+            if (category === 'lose' || category === 'draw') {
+                triggerPortraitGlitch(2000);
+                if (category === 'lose') {
+                    triggerPortraitColorGlitch(2000);
+                }
+            }
+            resolve();
+        });
+    });
+}
 
-    botMessageText.textContent = randomMessage.text;
-    catExpression.src = randomMessage.image;
-
-    if (category === 'lose' || category === 'draw') {
-        triggerPortraitGlitch(2000);
-        if (category === 'lose') {
-            triggerPortraitColorGlitch(2000);
+function typeMessage(message, index = 0, interval = 50) {
+    return new Promise(resolve => {
+        if (index < message.length) {
+            if (message[index] !== ' ') {
+                playSound(typeSound);
+            }
+            
+            botMessageText.textContent += message[index];
+            const nextInterval = Math.max(30, interval + (Math.random() * 20 - 10));
+            
+            setTimeout(() => {
+                typeMessage(message, index + 1, nextInterval).then(resolve);
+            }, nextInterval);
+        } else {
+            resolve();
         }
-    }
+    });
 }
 
 function updateDifficulty() {
