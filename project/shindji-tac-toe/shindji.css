@@ -1,0 +1,527 @@
+@font-face {
+            font-family: 'Cyber';
+            src: url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #0a0a12;
+            color: #0ff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 20%),
+                linear-gradient(to bottom, rgba(10, 10, 20, 0.9), rgba(5, 5, 15, 0.9));
+            z-index: -1;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bot-expression {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: rgba(20, 20, 40, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            width: 100%;
+            border: 1px solid #0ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bot-expression::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(0, 255, 255, 0.1) 50%,
+                    transparent 100%);
+            animation: scanline 3s linear infinite;
+        }
+
+        .bot-expression img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px #0ff);
+        }
+
+        .bot-message {
+            flex: 1;
+        }
+
+        .bot-message p {
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.5;
+            text-shadow: 0 0 5px #0ff;
+        }
+
+        .bot-message span {
+            color: #f0f;
+            text-shadow: 0 0 5px #f0f;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(20, 20, 40, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            border: 1px solid #0ff;
+            position: relative;
+        }
+
+        .board::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(90deg, transparent 49%, rgba(0, 255, 255, 0.2) 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, rgba(0, 255, 255, 0.2) 50%, transparent 51%);
+            pointer-events: none;
+        }
+
+        .cell {
+            background-color: rgba(10, 10, 30, 0.8);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+
+        .cell:hover {
+            background-color: rgba(30, 30, 60, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .cell:active {
+            transform: translateY(0);
+        }
+
+        .cell.x {
+            color: #f0f;
+            text-shadow: 0 0 10px #f0f, 0 0 20px #f0f;
+        }
+
+        .cell.o {
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+        }
+
+        .cell.winning-cell {
+            animation: pulse 1s infinite, glow 0.5s alternate infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px currentColor;
+            }
+
+            to {
+                box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+            }
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #0ff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #0ff;
+            text-shadow: 0 0 5px #0ff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(0, 255, 255, 0.2),
+                    transparent);
+            transition: 0.5s;
+        }
+
+        button:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        .status {
+            font-size: 14px;
+            text-align: center;
+            padding: 12px;
+            background-color: rgba(20, 20, 40, 0.8);
+            border-radius: 8px;
+            border: 1px solid #0ff;
+            width: 100%;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            text-shadow: 0 0 5px #0ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(0, 255, 255, 0.1) 50%,
+                    transparent 100%);
+            animation: scanline 4s linear infinite;
+            pointer-events: none;
+        }
+
+        .difficulty-meter {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(10, 10, 30, 0.8);
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+            border: 1px solid #0ff;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+        }
+
+        .difficulty-level {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg,
+                    #0ff,
+                    #f0f,
+                    #ff0);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transition: width 0.5s;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: #0ff;
+            opacity: 0;
+            z-index: 1000;
+            animation: confetti-fall 3s linear forwards;
+            border-radius: 50%;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(20, 20, 40, 0.8);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #f0f;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #0ff;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(31px, 9999px, 94px, 0);
+            }
+
+            10% {
+                clip: rect(112px, 9999px, 76px, 0);
+            }
+
+            20% {
+                clip: rect(85px, 9999px, 77px, 0);
+            }
+
+            30% {
+                clip: rect(27px, 9999px, 97px, 0);
+            }
+
+            40% {
+                clip: rect(64px, 9999px, 98px, 0);
+            }
+
+            50% {
+                clip: rect(61px, 9999px, 85px, 0);
+            }
+
+            60% {
+                clip: rect(99px, 9999px, 114px, 0);
+            }
+
+            70% {
+                clip: rect(34px, 9999px, 115px, 0);
+            }
+
+            80% {
+                clip: rect(98px, 9999px, 129px, 0);
+            }
+
+            90% {
+                clip: rect(43px, 9999px, 96px, 0);
+            }
+
+            100% {
+                clip: rect(82px, 9999px, 64px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(65px, 9999px, 119px, 0);
+            }
+
+            10% {
+                clip: rect(25px, 9999px, 145px, 0);
+            }
+
+            20% {
+                clip: rect(50px, 9999px, 137px, 0);
+            }
+
+            30% {
+                clip: rect(60px, 9999px, 139px, 0);
+            }
+
+            40% {
+                clip: rect(60px, 9999px, 83px, 0);
+            }
+
+            50% {
+                clip: rect(120px, 9999px, 115px, 0);
+            }
+
+            60% {
+                clip: rect(10px, 9999px, 129px, 0);
+            }
+
+            70% {
+                clip: rect(98px, 9999px, 120px, 0);
+            }
+
+            80% {
+                clip: rect(15px, 9999px, 74px, 0);
+            }
+
+            90% {
+                clip: rect(60px, 9999px, 130px, 0);
+            }
+
+            100% {
+                clip: rect(88px, 9999px, 109px, 0);
+            }
+        }
+
+        /* Glitch effect for bot portrait */
+        @keyframes glitch-bot {
+            0% {
+                transform: translate(0);
+                filter: drop-shadow(0 0 5px #0ff);
+            }
+
+            20% {
+                transform: translate(-3px, 3px);
+                filter: drop-shadow(-3px 3px 5px #f0f);
+            }
+
+            40% {
+                transform: translate(-3px, -3px);
+                filter: drop-shadow(3px -3px 5px #0ff);
+            }
+
+            60% {
+                transform: translate(3px, 3px);
+                filter: drop-shadow(3px 3px 5px #f0f);
+            }
+
+            80% {
+                transform: translate(3px, -3px);
+                filter: drop-shadow(-3px 3px 5px #0ff);
+            }
+
+            100% {
+                transform: translate(0);
+                filter: drop-shadow(0 0 5px #0ff);
+            }
+        }
+
+        @keyframes glitch-bot-color {
+            0% {
+                filter: drop-shadow(0 0 5px #0ff) hue-rotate(0deg);
+            }
+
+            20% {
+                filter: drop-shadow(0 0 5px #f0f) hue-rotate(90deg);
+            }
+
+            40% {
+                filter: drop-shadow(0 0 5px #0ff) hue-rotate(180deg);
+            }
+
+            60% {
+                filter: drop-shadow(0 0 5px #f0f) hue-rotate(270deg);
+            }
+
+            80% {
+                filter: drop-shadow(0 0 5px #0ff) hue-rotate(360deg);
+            }
+
+            100% {
+                filter: drop-shadow(0 0 5px #0ff) hue-rotate(0deg);
+            }
+        }
+
+        .glitch-portrait {
+            animation: glitch-bot 0.5s infinite;
+        }
+
+        .glitch-portrait-color {
+            animation: glitch-bot-color 1s infinite;
+        }
+
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .cyberpunk-text {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .audio-controls {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }

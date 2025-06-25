@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://i.pinimg.com/736x/50/28/6e/50286e27162506f8ed65f551686a6345.jpg">
+    <meta name="description" content="The hardest Tic Tac Toe">
+    <title>Shindji Tac Toe</title>
+    <link rel="stylesheet" href="shindji.css">
+</head>
+
+<body>
+    <div class="grid-lines"></div>
+
+    <audio id="clickSound" src="sfx/Pickup1.wav" preload="auto"></audio>
+    <audio id="winSound" src="sfx/win.wav" preload="auto"></audio>
+    <audio id="loseSound" src="https://assets.mixkit.co/sfx/preview/mixkit-negative-interface-beep-218.mp3"
+        preload="auto"></audio>
+    <audio id="drawSound" src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-casino-notification-211.mp3"
+        preload="auto"></audio>
+    <audio id="bgMusic" loop src="sfx/cats.mp3" preload="auto"></audio>
+
+    <main>
+        <div class="bot-expression">
+            <img id="cat-expression" src="https://i.imgur.com/Jj7l7OG.png" alt="AI Expression">
+            <div class="bot-message">
+                <p>SHINDJI: <span id="bot-message-text">MEMULAI GAME MATRIX...</span></p>
+                <div class="difficulty-meter">
+                    <div class="difficulty-level" id="difficulty-level"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status cyberpunk-text" id="status">GILIRAN KAMU [X]</div>
+
+        <div class="board" id="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+
+        <div class="controls">
+            <button id="reset-btn" class="cyberpunk-text">GAME BARU</button>
+            <button id="music-btn" class="cyberpunk-text">MUSIC ON</button>
+        </div>
+    </main>
+
+    <script src="shindji.js"></script>
+</body>
+
+</html>
