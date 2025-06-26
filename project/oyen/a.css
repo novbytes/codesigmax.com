@@ -1,0 +1,392 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    background-image: radial-gradient(#ffb6b6 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bgPulse 15s infinite alternate;
+}
+
+@keyframes bgPulse {
+    0% {
+        background-color: #f5f5f5;
+    }
+
+    25% {
+        background-color: #f0f5ff;
+    }
+
+    50% {
+        background-color: #f5fff0;
+    }
+
+    75% {
+        background-color: #fff0f5;
+    }
+
+    100% {
+        background-color: #f5f0ff;
+    }
+}
+
+main {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 800px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid #ff6b6b;
+}
+
+main:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.main-menu,
+.setting-menu,
+.game {
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.main-menu {
+    text-align: center;
+}
+
+.main-menu h1 {
+    color: #ff6b6b;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.main-menu p {
+    margin-bottom: 2rem;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.main-menu label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    font-size: 1.2rem;
+}
+
+.main-menu input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    transition: all 0.3s;
+    font-family: 'Comic Neue', cursive;
+}
+
+.main-menu input:focus {
+    border-color: #ff6b6b;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+    transform: scale(1.02);
+}
+
+.main-menu button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: all 0.3s;
+    font-family: 'Comic Neue', cursive;
+    font-weight: bold;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.main-menu button:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.main-menu button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.main-menu button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.main-menu button:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+.setting-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    padding: 2rem;
+    transform: translateX(100%);
+}
+
+.setting-menu[aria-hidden="false"] {
+    transform: translateX(0);
+}
+
+.game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    display: none;
+    flex-direction: column;
+}
+
+.oyen-potrait {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.oyen-potrait img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 5px solid #ff6b6b;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.oyen-potrait img:hover {
+    transform: rotate(5deg) scale(1.05);
+}
+
+.oyen-potrait p {
+    font-weight: bold;
+    color: #ff6b6b;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.oyen-message {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-left: 5px solid #ff6b6b;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.oyen-message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.player-choice {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.player-choice.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.player-choice button {
+    background-color: #4dabf7;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Comic Neue', cursive;
+    font-weight: bold;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.player-choice button:hover {
+    background-color: #339af0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.player-choice button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.3s;
+}
+
+.back-button:hover {
+    color: #ff6b6b;
+    transform: scale(1.1);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: flex !important;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    background-color: #ff6b6b;
+    margin-left: 2px;
+    animation: blink 0.7s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 1rem;
+        min-height: 400px;
+    }
+
+    .main-menu h1 {
+        font-size: 1.8rem;
+    }
+
+    .oyen-potrait img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .oyen-message {
+        min-height: 120px;
+        padding: 1rem;
+    }
+}

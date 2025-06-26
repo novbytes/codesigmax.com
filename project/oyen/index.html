@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyen | The Virtual Cat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="a.css">
+</head>
+
+<body>
+    <audio id="typing-sound" src="sfx/Blip5.wav"></audio>
+    <main>
+        <div class="main-menu">
+            <h1>Oyen - The Game</h1>
+            <p>Permainan ini murni fiksi dan tidak nyata, jadi jangan terlalu serius terhadap karakter fiksi.</p>
+            <label for="player-name-input">
+                Masukan namamu
+            </label>
+            <input type="text" id="player-name-input" placeholder="3 ~ 20 Karakter" minlength="3" maxlength="20">
+            <button id="play-button">MAIN</button>
+            <button id="settings-button"><i class="fas fa-gear"></i> Pengaturan</button>
+        </div>
+
+        <div class="setting-menu" aria-hidden="true">
+            <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+            <h2>Pengaturan</h2>
+            <div class="setting-option">
+                <label for="volume-control">Volume</label>
+                <input type="range" id="volume-control" min="0" max="100" value="50">
+            </div>
+            <button id="reset-button" style="background-color: #ff6b6b; margin-top: 1rem;">
+                <i class="fas fa-trash"></i> Atur Ulang Permainan
+            </button>
+        </div>
+
+        <div class="game">
+            <div class="oyen-potrait">
+                <img src="images/cat-sleeping.png" alt="Oyen si kucing" id="cat-image">
+                <p>OYEN</p>
+            </div>
+            <div class="oyen-message" id="cat-message">
+                <span id="message-text"></span>
+                <span class="typing-cursor" id="typing-cursor"></span>
+            </div>
+            <div class="player-choice" id="choice-buttons">
+            </div>
+        </div>
+    </main>
+
+    <script src="a.js"></script>
+</body>
+
+</html>
